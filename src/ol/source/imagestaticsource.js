@@ -25,9 +25,10 @@ ol.source.ImageStatic = function(options) {
 
   var imageExtent = options.imageExtent;
 
-  var resolution, resolutions;
+  var resolution, resolution_x, resolutions;
   if (goog.isDef(options.imageSize)) {
     resolution = ol.extent.getHeight(imageExtent) / options.imageSize[1];
+	resolution_x = ol.extent.getWidth(imageExtent) / options.imageSize[0]; // David - add this for width resolution
     resolutions = [resolution];
   }
 
@@ -47,6 +48,7 @@ ol.source.ImageStatic = function(options) {
    */
   this.image_ = new ol.Image(imageExtent, resolution, 1, attributions,
       options.url, crossOrigin);
+  this.image_.resolution_x = resolution_x;	// David - add this for width resolution
 
 };
 goog.inherits(ol.source.ImageStatic, ol.source.Image);

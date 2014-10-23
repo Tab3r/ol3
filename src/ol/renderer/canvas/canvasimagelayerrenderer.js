@@ -126,15 +126,20 @@ ol.renderer.canvas.ImageLayer.prototype.prepareFrame =
     image = this.image_;
     var imageExtent = image.getExtent();
     var imageResolution = image.getResolution();
+	var imageResolution_x = image.resolution_x;	//	David - add to read X resolution
     var imagePixelRatio = image.getPixelRatio();
     var scale = pixelRatio * imageResolution /
         (viewResolution * imagePixelRatio);
+	var scale_x = pixelRatio * imageResolution_x /
+    (viewResolution * imagePixelRatio);			//  David - add -> Scale in X
     ol.vec.Mat4.makeTransform2D(this.imageTransform_,
         pixelRatio * frameState.size[0] / 2,
         pixelRatio * frameState.size[1] / 2,
-        scale, scale,
+		// scale, scale,
+        scale_x, scale, //David
         viewRotation,
-        imagePixelRatio * (imageExtent[0] - viewCenter[0]) / imageResolution,
+        //imagePixelRatio * (imageExtent[0] - viewCenter[0]) / imageResolution,
+		imagePixelRatio * (imageExtent[0] - viewCenter[0]) / imageResolution_x,
         imagePixelRatio * (viewCenter[1] - imageExtent[3]) / imageResolution);
     this.updateAttributions(frameState.attributions, image.getAttributions());
     this.updateLogos(frameState, imageSource);
